@@ -2,6 +2,7 @@ package se.jacobswenson.repository;
 
 import se.jacobswenson.model.*;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -166,6 +167,7 @@ public class Repository {
             }
             return true;
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel, beställningen kunde inte läggas.");
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;

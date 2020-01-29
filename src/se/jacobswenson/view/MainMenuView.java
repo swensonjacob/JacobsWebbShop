@@ -17,6 +17,7 @@ public class MainMenuView extends JFrame implements ActionListener {
     private List<Modell> modelsInStock ;
     private JButton backButton = createLogOutButton();
     private JButton cartButton = createCartButton();
+    private JPanel buttonPanel = createPanel();
     private HashMap<String, Integer> modelInfo = new HashMap<>();
 
 
@@ -26,7 +27,6 @@ public class MainMenuView extends JFrame implements ActionListener {
 
         modelButtons = new ArrayList<>();
         panelHandler.setMainMenuPanel(createPanel());
-        this.modelsInStock = this.panelHandler.getController().getAllModels();
 
         JPanel menuBar = createPanel();
         menuBar.setLayout(new GridLayout(2, 1, 10, 10));
@@ -36,26 +36,9 @@ public class MainMenuView extends JFrame implements ActionListener {
         menuBar.add(backButton);
         menuBar.add(cartButton);
 
-        JPanel buttonPanel = createPanel();
         buttonPanel.setLayout(new GridLayout(modelButtons.size(), 2, 5, 5));
-
-
-        this.modelsInStock.forEach(s -> {
-            String btnText = "   " +s.getMarke().getNamn() + ", " + s.getNamn();
-            if (!modelInfo.containsValue(s.getId())) {
-                modelInfo.put(btnText, s.getId());
-                JButton btn = createModelButton(s.getBildFilnamn());
-                btn.setText(btnText);
-                modelButtons.add(btn);
-            }
-
-        });
-        modelButtons.forEach(m -> {
-            buttonPanel.add(m);
-            m.addActionListener(this);
-        });
-
         buttonPanel.setBorder(new EmptyBorder(10, 10, 50, 100));
+        updateModels();
 
         panelHandler.getMainMenuPanel().setLayout(new BorderLayout());
         panelHandler.getMainMenuPanel().add(createLogo(), BorderLayout.NORTH);
@@ -81,6 +64,24 @@ public class MainMenuView extends JFrame implements ActionListener {
                 }
             });
         }
+    }
+    public void updateModels() {
+        this.modelsInStock = this.panelHandler.getController().getAllModels();
+
+        this.modelsInStock.forEach(s -> {
+            String btnText = "   " +s.getMarke().getNamn() + ", " + s.getNamn();
+            if (!modelInfo.containsValue(s.getId())) {
+                modelInfo.put(btnText, s.getId());
+                JButton btn = createModelButton(s.getBildFilnamn());
+                btn.setText(btnText);
+                modelButtons.add(btn);
+            }
+
+        });
+        modelButtons.forEach(m -> {
+            buttonPanel.add(m);
+            m.addActionListener(this);
+        });
     }
 }
 

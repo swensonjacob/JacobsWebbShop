@@ -24,6 +24,7 @@ public class LoginView extends JFrame  implements ActionListener {
         JPanel loginPanel = SwingSetup.createPanel();
         JButton loginButton = createButton("Logga in");
         loginButton.addActionListener(this);
+
         loginPanel.setLayout(new GridLayout(3, 2));
         loginPanel.add(createLabel("Användarnamn",2));
         loginPanel.add(createLabel("Lösenord",2));
